@@ -27,7 +27,9 @@ router.post('/create',upload.single('photo'), async(req, res) =>{
     try{
         const {name, age, email, phone, address} = req.body
 
-        const photoPath = req.file ? req.file.path : null
+       // const photoPath = req.file ? req.file.path : null
+
+       const photoBase64 = req.file ? req.file.buffer.toString('base64') : null;
 
         const newStudent = new Student({
             name,
@@ -35,7 +37,7 @@ router.post('/create',upload.single('photo'), async(req, res) =>{
             email,
             phone,
             address,
-            photo: photoPath
+            photo: photoBase64   //photoPath
         });
 
        const response = await newStudent.save()
