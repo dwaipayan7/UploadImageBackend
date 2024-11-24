@@ -19,10 +19,13 @@ const studentSchema = new mongoose.Schema({
     phone:{
         type:String,
         required:false
-    },
+    }, 
     address:{
         type:String,
         required:false
+    },
+    photo:{
+        type:String,
     }
 
  

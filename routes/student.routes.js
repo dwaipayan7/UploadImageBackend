@@ -5,16 +5,37 @@ const multer = require('multer')
 
 // upload.single('photo'),
 
-router.post('/create', async(req, res) =>{
+//Using Local Storage
+/*
+const storage = multer.diskStorage({
+    destination: (req, file, cb) =>{
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        const suffix = Date.now();
+        cb(null, suffix + '_' + file.originalname);
+    }
+});
+*/
+
+const storage = multer.memoryStorage();
+
+const upload = multer({storage});
+
+
+router.post('/create',upload.single('photo'), async(req, res) =>{
     try{
         const {name, age, email, phone, address} = req.body
+
+        const photoPath = req.file ? req.file.path : null
 
         const newStudent = new Student({
             name,
             age,
             email,
             phone,
-            address
+            address,
+            photo: photoPath
         });
 
        const response = await newStudent.save()
